@@ -1,33 +1,22 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { useState } from "react";
-import ListFun from "./ListFun";
+import logo from './logo.svg';
+import './App.css';
+import { useCallback, useState } from 'react';
+import ListFun from './ListFun';
 
 function App() {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(true);
   const [count, setCount] = useState(0);
-  const handleClick = (a) => {
+   const handleClick = useCallback((a) => {
     return [count + a, count + a + 1, count + a + 2];
-  };
-  //     const handleClick = useCallback((a) => {
-  //   return [count + a, count + a + 1, count + a + 2];
-  //  }, [count])
+   },[count])
+   const theme = {
+    backgroundColor: value?'black' :'',
+    color: value?'white':'',}
   return (
-    <div className="App">
-      <input
-        value={count}
-        onChange={(e) => setCount(parseInt(e.target.value))}
-      />
-      <ListFun handleClick={handleClick} />
-      <button
-        onClick={() => {
-          setValue(() => {
-            console.log("rendering");
-          });
-        }}
-      >
-        Click Me
-      </button>
+    <div style={theme}>
+     <input value={count} onChange={(e) => setCount(e.target.value)}/>
+     <ListFun handleClick={handleClick}/>
+     <button onClick={() => {setValue(value => !value)}}>Click Me</button>
     </div>
   );
 }
